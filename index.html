@@ -1,302 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard Claro Tietê Plaza — V5</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Diário de Vendas Tietê Plaza</title>
 <style>
-:root{--red:#e30613;--dark:#30323a;--bg:#f4f5f7;--line:#e1e1e1}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
-header{background:linear-gradient(135deg,#ed0010,#bd000b);color:#fff;padding:18px}.brand{display:flex;gap:12px;align-items:center}.logo{width:45px;height:45px;border-radius:50%;background:#fff;color:var(--red);display:grid;place-items:center;font-weight:900;font-size:27px}
-h1{font-size:21px;margin:0}.sub{font-size:13px;opacity:.9;margin-top:4px}
-nav{background:#fff;display:flex;overflow:auto;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:3}nav button{padding:15px 16px;border:0;background:none;font-weight:800;color:#666;white-space:nowrap;cursor:pointer}nav button.active{color:var(--red);border-bottom:3px solid var(--red)}
-main{max-width:1150px;margin:auto;padding:16px}.page{display:none}.page.active{display:block}
-.hero{background:linear-gradient(135deg,#e30613,#c7000c);color:#fff;border-radius:18px;padding:20px;margin-bottom:15px}.hero h2{font-size:28px;margin:8px 0}.hero p{margin:0;opacity:.9}
-.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}.panel h3{margin:0 0 13px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:11px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.label{font-size:11px;font-weight:800;color:#777}.value{font-size:26px;font-weight:900;margin:7px 0}.small{font-size:12px;color:#666}
-.bar{height:8px;background:#eee;border-radius:8px;overflow:hidden;margin-top:9px}.fill{height:100%;background:var(--red);width:0}
-.good{color:#16823d;font-weight:800}.warn{color:#a66b00;font-weight:800}.bad{color:#d00000;font-weight:800}
-.filters,.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:11px}.filters label,.formgrid label{font-size:11px;font-weight:800;color:#666}.filters select,.filters input,.formgrid select,.formgrid input{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:10px;background:#fff}
-.btn{border:0;border-radius:10px;padding:12px 18px;background:var(--red);color:#fff;font-weight:900;margin-top:13px;cursor:pointer}.btn.secondary{background:#333}.btn.light{background:#eee;color:#333}
-.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:850px;background:#fff}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:12px}th{background:#fafafa;color:#666}
-.note{font-size:12px;color:#777}.metaBox{border:1px solid #eee;border-radius:12px;padding:12px}.metaBox input{width:100%;padding:10px;border:1px solid #ccc;border-radius:9px;margin-top:6px}
-.alert{padding:11px;border-radius:10px;background:#fff6d9;color:#765600;font-size:12px;margin-top:12px}
-
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.dayhead{text-align:center;font-size:11px;font-weight:900;color:#777;padding:6px}
-.day{min-height:90px;border:1px solid #e3e3e3;border-radius:12px;background:#fff;padding:9px;position:relative}
-.day.empty{background:transparent;border:0}.daynum{font-size:11px;font-weight:900;color:#777}.dayval{font-size:23px;font-weight:900;margin-top:9px}.daytarget{font-size:10px;color:#777;margin-top:3px}
-.day.sgood{border-left:5px solid #16823d}.day.swarn{border-left:5px solid #d49700}.day.sbad{border-left:5px solid #d00000}.day.snone{background:#f1f1f1;color:#999}
-@media(max-width:650px){.calendar{gap:4px}.day{min-height:75px;padding:6px}.dayval{font-size:18px}.daytarget{font-size:9px}.dayhead{font-size:9px}}
+:root{--red:#e30613;--red2:#b4000b;--black:#080808;--panel:rgba(13,13,13,.92);--line:#2c2c2c;--text:#fff;--muted:#aaa;--green:#27d17f;--yellow:#f4c542}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#080808 url('/loja.jpg') center/cover fixed no-repeat}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,.76),rgba(0,0,0,.91));z-index:-1}
+header{padding:28px 5vw 22px;border-bottom:1px solid #333;background:linear-gradient(90deg,rgba(0,0,0,.95),rgba(20,0,0,.7));position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:18px}.mark{width:54px;height:54px;border:3px solid var(--red);border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:900;color:var(--red)}
+h1{margin:0;font-size:clamp(24px,4vw,42px);letter-spacing:.5px}h1 span{color:var(--red)}.sub{color:#ccc;margin-top:5px}
+nav{display:flex;gap:8px;overflow:auto;padding:12px 5vw;background:rgba(0,0,0,.88);border-bottom:1px solid #333;position:sticky;top:108px;z-index:9}
+nav button{background:#171717;color:#ddd;border:1px solid #333;border-radius:9px;padding:11px 15px;white-space:nowrap;font-weight:700}nav button.active{background:var(--red);border-color:var(--red);color:white}
+main{max-width:1400px;margin:auto;padding:24px 5vw 60px}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(110deg,rgba(150,0,0,.9),rgba(15,15,15,.92));border:1px solid #6e0b11;border-radius:20px;padding:24px;margin-bottom:18px}.hero small{color:#ddd}.hero h2{font-size:34px;margin:7px 0}.hero p{margin:0;color:#ddd}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin:18px 0;box-shadow:0 12px 30px rgba(0,0,0,.25)}h3{margin:0 0 16px;font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.card{border:1px solid #343434;border-radius:14px;padding:15px;background:linear-gradient(145deg,#171717,#0c0c0c)}.card .label{color:#aaa;font-size:12px;text-transform:uppercase}.card .num{font-size:28px;font-weight:900;margin:7px 0}.pct{font-weight:800}.bar{height:7px;background:#333;border-radius:9px;overflow:hidden;margin-top:9px}.bar i{display:block;height:100%;background:var(--red);border-radius:9px}
+.filters,.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.field label{display:block;color:#aaa;font-size:12px;margin-bottom:6px}input,select{width:100%;background:#121212;color:white;border:1px solid #444;border-radius:10px;padding:12px;font-size:15px}
+.btn{border:0;border-radius:10px;padding:12px 16px;background:var(--red);color:#fff;font-weight:800;cursor:pointer}.btn.dark{background:#333}
+.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:820px}th,td{padding:11px;border-bottom:1px solid #292929;text-align:left;font-size:13px}th{color:#aaa}.status{display:inline-block;border-radius:999px;padding:5px 9px;font-weight:800}.ok{background:rgba(39,209,127,.16);color:var(--green)}.warn{background:rgba(244,197,66,.16);color:var(--yellow)}.bad{background:rgba(227,6,19,.16);color:#ff5d66}
+.sync{display:flex;align-items:center;gap:8px;color:#aaa;font-size:12px}.dot{width:9px;height:9px;border-radius:50%;background:var(--green)}.dot.off{background:#777}
+.notice{padding:12px;border-left:4px solid var(--red);background:#171717;color:#ccc;border-radius:8px}
+@media(max-width:650px){header{padding:18px 4vw}.brand{gap:11px}.mark{width:43px;height:43px;font-size:22px}nav{top:88px;padding:9px 4vw}main{padding:18px 4vw 40px}.hero h2{font-size:28px}.panel{padding:15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card .num{font-size:23px}}
 </style>
 </head>
 <body>
-<header><div class="brand"><div class="logo">C</div><div><h1>DASHBOARD DE VENDAS — CLARO TIETÊ PLAZA</h1><div class="sub">V5 · Calendário diário + recuperação de meta</div></div></div></header>
+<header>
+ <div class="brand"><div class="mark">C</div><div><h1>DIÁRIO DE VENDAS <span>TIETÊ PLAZA</span></h1><div class="sub">Gestão diária da loja e da equipe</div></div></div>
+</header>
 <nav>
-<button class="active" onclick="page('dashboard',this)">▦ Dashboard</button>
-<button onclick="page('lancamento',this)">✎ Lançamento</button>
-<button onclick="page('individual',this)">👤 Individual</button>
-<button onclick="page('ranking',this)">🏆 Ranking</button>
-<button onclick="page('calendario',this)">📅 Calendário</button>
-<button onclick="page('equipe',this)">👥 Equipe</button>
-<button onclick="page('metas',this)">🎯 Metas</button>
+ <button class="active" onclick="show('dashboard',this)">Dashboard</button>
+ <button onclick="show('lancamento',this)">Lançamentos</button>
+ <button onclick="show('individual',this)">Individual</button>
+ <button onclick="show('ranking',this)">Ranking</button>
+ <button onclick="show('metas',this)">Metas</button>
 </nav>
-
 <main>
 <section id="dashboard" class="page active">
-<div class="hero"><small id="mesHero">SETEMBRO / 2026</small><h2 id="status">0 dias lançados</h2><p id="diasTexto">Mês com 30 dias · acompanhamento automático conforme o mês selecionado.</p></div>
-<div class="panel"><h3>Filtros</h3><div class="filters">
-<label>Mês<select id="mesFiltro"></select></label>
-<label>Vendedor<select id="filtro"><option>Todos</option></select></label>
-<label>Dia<input id="diaFiltro" type="date"></label>
-</div></div>
-<div class="panel"><h3>Resultado acumulado × meta</h3><div class="grid" id="cards"></div></div>
-<div class="panel"><h3>Necessidade diária</h3><div class="grid" id="necessidade"></div><div class="alert">A necessidade diária considera os dias restantes do mês. Se a meta já foi atingida, aparece 0.</div></div>
+ <div class="hero"><small id="monthLabel"></small><h2 id="storePct">Resultado da loja</h2><p id="storeSummary">Sincronização compartilhada ativa.</p></div>
+ <div class="panel"><h3>Resultado da Loja</h3><div class="grid" id="storeCards"></div></div>
+ <div class="panel"><h3>Desempenho Individual</h3><div class="tablewrap"><table><thead><tr><th>Vendedor</th><th>GROSS</th><th>Fibra</th><th>TV</th><th>MPLAY</th><th>Google</th><th>Geral</th></tr></thead><tbody id="sellerRows"></tbody></table></div></div>
+ <div class="panel"><div class="sync"><span class="dot" id="syncDot"></span><span id="syncText">Sincronizando...</span></div></div>
 </section>
-
 <section id="lancamento" class="page">
-<div class="panel"><h3>Lançamento diário</h3><p class="note">O mês é identificado pela data do lançamento. Para a mesma data + vendedor, um novo lançamento substitui o anterior.</p>
-<form id="form"><div class="formgrid">
-<label>Data<input id="data" type="date" required></label>
-<label>Vendedor<select id="vend"></select></label>
-<label>GROSS<input id="gross" type="number" min="0" value="0"></label>
-<label>CONTA<input id="conta" type="number" min="0" value="0"></label>
-<label>APARELHOS<input id="aparelhos" type="number" min="0" value="0"></label>
-<label>ACESSÓRIOS<input id="acessorios" type="number" min="0" value="0"></label>
-<label>FIBRA<input id="fibra" type="number" min="0" value="0"></label>
-<label>TV<input id="tv" type="number" min="0" value="0"></label>
-<label>MPLAY<input id="mplay" type="number" min="0" value="0"></label>
-<label>SEGUROS<input id="seguros" type="number" min="0" value="0"></label>
-<label>GOOGLE<input id="google" type="number" min="0" value="0"></label>
-</div><button class="btn">Salvar lançamento</button></form></div>
+ <div class="panel"><h3>Novo lançamento</h3><div class="formgrid">
+  <div class="field"><label>Data</label><input id="date" type="date"></div>
+  <div class="field"><label>Vendedor</label><select id="seller"></select></div>
+  <div class="field"><label>GROSS</label><input id="gross" type="number" min="0" value="0"></div>
+  <div class="field"><label>CONTA</label><input id="conta" type="number" min="0" value="0"></div>
+  <div class="field"><label>Fibra</label><input id="fibra" type="number" min="0" value="0"></div>
+  <div class="field"><label>TV</label><input id="tv" type="number" min="0" value="0"></div>
+  <div class="field"><label>MPLAY</label><input id="mplay" type="number" min="0" value="0"></div>
+  <div class="field"><label>Google</label><input id="google" type="number" min="0" value="0"></div>
+ </div><button class="btn" style="margin-top:14px" onclick="saveLaunch()">Salvar lançamento</button></div>
+ <div class="panel"><h3>Últimos lançamentos</h3><div class="tablewrap"><table><thead><tr><th>Data</th><th>Vendedor</th><th>GROSS</th><th>Fibra</th><th>TV</th><th>MPLAY</th><th>Google</th></tr></thead><tbody id="launchRows"></tbody></table></div></div>
 </section>
-
-<section id="individual" class="page">
-<div class="panel"><h3>Meta individual</h3><div class="filters"><label>Mês<select id="indMes"></select></label><label>Vendedor<select id="indVend"></select></label></div><div id="indContent" style="margin-top:15px"></div></div>
-</section>
-
-<section id="ranking" class="page">
-<div class="panel"><h3>Ranking da equipe</h3><div class="filters"><label>Mês<select id="rankMes"></select></label></div><div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>#</th><th>Vendedor</th><th>GROSS</th><th>FIBRA</th><th>TV</th><th>MPLAY</th><th>Google</th><th>Pontos</th></tr></thead><tbody id="rank"></tbody></table></div></div>
-</section>
-
-
-
-<section id="calendario" class="page">
-<div class="panel">
-<h3>📅 Acompanhamento diário do mês</h3>
-<p class="note">Escolha o mês, vendedor e indicador. O calendário mostra o realizado de cada dia e compara com a referência diária da meta individual.</p>
-<div class="filters">
-<label>Mês<select id="calMes"></select></label>
-<label>Vendedor<select id="calVend"></select></label>
-<label>Indicador<select id="calIndicador">
-<option value="gross">GROSS</option><option value="conta">CONTA</option><option value="aparelhos">APARELHOS</option>
-<option value="acessorios">ACESSÓRIOS</option><option value="fibra">FIBRA</option><option value="tv">TV</option>
-<option value="mplay">MPLAY</option><option value="seguros">SEGUROS</option><option value="google">GOOGLE</option>
-</select></label>
-</div>
-<div id="calResumo" class="grid" style="margin-top:15px"></div>
-<div id="calendarGrid" class="calendar" style="margin-top:15px"></div>
-<div class="alert">🟢 atingiu a referência diária · 🟡 fez pelo menos 80% · 🔴 abaixo de 80% · cinza = sem lançamento.</div>
-</div>
-
-<div class="panel">
-<h3>📋 Visão da equipe por dia</h3>
-<div class="filters">
-<label>Dia<input type="date" id="equipeDia"></label>
-<label>Indicador<select id="equipeIndicador">
-<option value="gross">GROSS</option><option value="fibra">FIBRA</option><option value="tv">TV</option><option value="mplay">MPLAY</option><option value="google">GOOGLE</option>
-</select></label>
-</div>
-<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Vendedor</th><th>Realizado</th><th>Necessidade do dia</th><th>Status</th><th>Acumulado</th><th>Falta</th><th>Nova necessidade/dia</th></tr></thead><tbody id="dailyTeam"></tbody></table></div>
-</div>
-</section>
-
-<section id="equipe" class="page">
-<div class="panel"><h3>👥 Configuração da equipe</h3>
-<p class="note">Cadastre, edite ou desative vendedores. As metas individuais podem ser definidas por mês.</p>
-<div class="filters"><label>Mês das metas individuais<select id="equipeMes"></select></label></div>
-<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Ativo</th><th>Vendedor</th><th>Meta GROSS</th><th>Meta Fibra</th><th>Meta TV</th><th>Meta MPLAY</th><th>Meta Google</th><th></th></tr></thead><tbody id="equipeTable"></tbody></table></div>
-<div style="margin-top:12px"><input id="novoVendedor" placeholder="Nome do novo vendedor" style="padding:11px;border:1px solid #ccc;border-radius:10px;width:min(100%,320px)"><button class="btn" onclick="addVendedor()">Adicionar vendedor</button></div>
-<button class="btn" onclick="saveEquipe()">Salvar equipe e metas individuais</button>
-</div>
-</section>
-
-<section id="metas" class="page">
-<div class="panel"><h3>🎯 Configuração de metas</h3><p class="note">Você pode alterar as metas da loja a qualquer momento. As metas ficam salvas neste navegador por mês.</p>
-<div class="filters"><label>Mês<select id="metaMes"></select></label></div>
-<div class="grid" id="metaGrid" style="margin-top:15px"></div>
-<button class="btn" onclick="saveMetas()">Salvar metas do mês</button>
-<button class="btn light" onclick="resetMetas()">Restaurar metas padrão</button>
-</div>
-</section>
+<section id="individual" class="page"><div class="panel"><h3>Resultado individual</h3><select id="individualSelect" onchange="renderIndividual()"></select><div class="grid" id="individualCards" style="margin-top:15px"></div></div></section>
+<section id="ranking" class="page"><div class="panel"><h3>Ranking da equipe</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Vendedor</th><th>GROSS</th><th>Fibra</th><th>TV</th><th>MPLAY</th><th>Geral</th></tr></thead><tbody id="rankingRows"></tbody></table></div></div></section>
+<section id="metas" class="page"><div class="panel"><h3>Metas da loja</h3><div class="grid" id="metaInputs"></div><button class="btn" style="margin-top:15px" onclick="saveMetas()">Salvar metas compartilhadas</button><p class="notice" style="margin-top:15px">As metas ficam compartilhadas entre os gestores.</p></div></section>
 </main>
-
 <script>
-const defaultVendedores=["Alex","Bruno","Patrick","Diego","Glaucia","João","Matheus","Erick","Giulia","Italo","Guilherme"];
-let equipe=JSON.parse(localStorage.getItem("claroTieteV4Equipe")||"null")||defaultVendedores.map(nome=>({nome,ativo:true}));
-function nomesAtivos(){return equipe.filter(x=>x.ativo).map(x=>x.nome)}
-const defaultMetas={gross:748,conta:450,aparelhos:320,acessorios:350,fibra:107,tv:128,mplay:60,seguros:69,google:40};
-const nomes={gross:"GROSS",conta:"CONTA",aparelhos:"APARELHOS",acessorios:"ACESSÓRIOS",fibra:"FIBRA",tv:"TV",mplay:"MPLAY",seguros:"SEGUROS",google:"GOOGLE"};
-const keys=Object.keys(defaultMetas);
-const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-const diasMes=(ano,mes)=>new Date(ano,mes+1,0).getDate();
-const chaveMes=(ano,mes)=>`${ano}-${String(mes+1).padStart(2,"0")}`;
-let dados=JSON.parse(localStorage.getItem("claroTieteV3Dados")||"[]");
-let metasMensais=JSON.parse(localStorage.getItem("claroTieteV3Metas")||"{}");
-
-function anoAtual(){return 2026}
-function mesAtual(){return 8}
-function mesLabel(ch){let [a,m]=ch.split("-").map(Number);return `${meses[m-1]} / ${a}`}
-function montarMeses(id){
- const s=document.getElementById(id);s.innerHTML="";
- for(let y=anoAtual()-1;y<=anoAtual()+1;y++)for(let m=0;m<12;m++){let o=document.createElement("option"),c=chaveMes(y,m);o.value=c;o.textContent=mesLabel(c);s.appendChild(o)}
- s.value=chaveMes(anoAtual(),mesAtual());
-}
-function opts(id,all=false){let s=document.getElementById(id);s.innerHTML=all?'<option>Todos</option>':'';nomesAtivos().forEach(v=>{let o=document.createElement("option");o.textContent=v;s.appendChild(o)})}
-function getMetas(ch){if(!metasMensais[ch])metasMensais[ch]={...defaultMetas};return metasMensais[ch]}
-function saveAll(){localStorage.setItem("claroTieteV3Dados",JSON.stringify(dados));localStorage.setItem("claroTieteV3Metas",JSON.stringify(metasMensais))}
-function page(id,b){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()}
-function currentMonth(){return document.getElementById("mesFiltro").value}
-function subset(){let v=document.getElementById("filtro").value,d=document.getElementById("diaFiltro").value,ch=currentMonth();return dados.filter(x=>x.data.startsWith(ch)&&(v==="Todos"||x.vendedor===v)&&(!d||x.data===d))}
-function total(arr,k){return arr.reduce((s,x)=>s+(+x[k]||0),0)}
-function cls(p){return p>=100?"good":p>=80?"warn":"bad"}
-function render(){
- const ch=currentMonth(),[ano,mm]=ch.split("-").map(Number),m=mm-1,arr=subset(),meta=getMetas(ch),lancados=new Set(arr.map(x=>x.data)).size,totalDias=diasMes(ano,m);
- document.getElementById("mesHero").textContent=mesLabel(ch).toUpperCase();
- document.getElementById("status").textContent=`${lancados} dias lançados`;
- document.getElementById("diasTexto").textContent=`Mês com ${totalDias} dias · ${Math.max(totalDias-lancados,0)} dias restantes no acompanhamento.`;
- document.getElementById("cards").innerHTML=keys.map(k=>{let v=total(arr,k),p=meta[k]?Math.round(v/meta[k]*100):0;return `<div class="card"><div class="label">${nomes[k]}</div><div class="value">${v}</div><div class="small ${cls(p)}">${p}% · meta ${meta[k]}</div><div class="bar"><div class="fill" style="width:${Math.min(p,100)}%"></div></div></div>`}).join("");
- const restantes=Math.max(totalDias-lancados,1);
- document.getElementById("necessidade").innerHTML=keys.map(k=>{let f=Math.max(meta[k]-total(arr,k),0);return `<div class="card"><div class="label">${nomes[k]}</div><div class="value">${Math.ceil(f/restantes)}</div><div class="small">por dia para fechar a meta</div></div>`}).join("");
- renderIndividual();renderRank();renderCalendar();renderDailyTeam();
-}
-function renderIndividual(){
- let ch=document.getElementById("indMes").value,v=document.getElementById("indVend").value,arr=dados.filter(x=>x.data.startsWith(ch)&&x.vendedor===v),meta=getMetas(ch),im=getIndMeta(ch,v);
- let html='<div class="grid">';
- keys.forEach(k=>{
-   let m=(["gross","fibra","tv","mplay","google"].includes(k)?im[k]:Math.ceil(meta[k]/Math.max(nomesAtivos().length,1)));
-   let r=total(arr,k),p=m?Math.round(r/m*100):0;
-   html+=`<div class="card"><div class="label">${nomes[k]}</div><div class="value">${r}</div><div class="small">meta individual: <b>${m}</b></div><div class="${cls(p)}">${p}%</div></div>`;
- });
- document.getElementById("indContent").innerHTML=html+'</div>';
-}
-function renderRank(){
- let ch=document.getElementById("rankMes").value;
- let rows=nomesAtivos().map(v=>{let a=dados.filter(x=>x.data.startsWith(ch)&&x.vendedor===v),g=k=>total(a,k),p=g("gross")+g("fibra")*3+g("tv")*2+g("mplay")*2+g("google");return {v,g,p}}).sort((a,b)=>b.p-a.p);
- document.getElementById("rank").innerHTML=rows.map((x,i)=>`<tr><td><b>${i+1}</b></td><td>${x.v}</td><td>${x.g("gross")}</td><td>${x.g("fibra")}</td><td>${x.g("tv")}</td><td>${x.g("mplay")}</td><td>${x.g("google")}</td><td><b>${x.p}</b></td></tr>`).join("");
-}
-
-function indGoal(ch,v,k){
- let meta=getMetas(ch);
- if(["gross","fibra","tv","mplay","google"].includes(k)) return getIndMeta(ch,v)[k]||0;
- return Math.ceil((meta[k]||0)/Math.max(nomesAtivos().length,1));
-}
-function dailyGoal(ch,v,k){
- let [a,m]=ch.split("-").map(Number);
- return Math.ceil(indGoal(ch,v,k)/diasMes(a,m-1));
-}
-function renderCalendar(){
- let ch=document.getElementById("calMes").value,v=document.getElementById("calVend").value,k=document.getElementById("calIndicador").value;
- if(!ch||!v)return;
- let [a,m]=ch.split("-").map(Number),nd=diasMes(a,m-1),goal=indGoal(ch,v,k),ref=dailyGoal(ch,v,k);
- let arr=dados.filter(x=>x.data.startsWith(ch)&&x.vendedor===v),acc=total(arr,k),falt=Math.max(goal-acc,0);
- let diasComLanc=new Set(arr.map(x=>x.data)).size,rest=Math.max(nd-diasComLanc,1),nova=Math.ceil(falt/rest);
- document.getElementById("calResumo").innerHTML=
- `<div class="card"><div class="label">META INDIVIDUAL</div><div class="value">${goal}</div></div>
- <div class="card"><div class="label">REALIZADO</div><div class="value">${acc}</div></div>
- <div class="card"><div class="label">FALTA</div><div class="value">${falt}</div></div>
- <div class="card"><div class="label">REFERÊNCIA/DIA</div><div class="value">${ref}</div></div>
- <div class="card"><div class="label">NOVA NECESSIDADE/DIA</div><div class="value">${nova}</div><div class="small">${rest} dias restantes</div></div>`;
- let first=new Date(a,m-1,1).getDay(), heads=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"],h=heads.map(x=>`<div class="dayhead">${x}</div>`).join("");
- for(let i=0;i<first;i++)h+='<div class="day empty"></div>';
- for(let d=1;d<=nd;d++){
-   let dt=`${ch}-${String(d).padStart(2,"0")}`,rows=arr.filter(x=>x.data===dt),has=rows.length>0,val=total(rows,k);
-   let status=!has?"snone":val>=ref?"sgood":val>=ref*.8?"swarn":"sbad";
-   h+=`<div class="day ${status}"><div class="daynum">${d}</div><div class="dayval">${has?val:"—"}</div><div class="daytarget">ref. ${ref}</div></div>`;
- }
- document.getElementById("calendarGrid").innerHTML=h;
-}
-function renderDailyTeam(){
- let dt=document.getElementById("equipeDia").value,k=document.getElementById("equipeIndicador").value;if(!dt)return;
- let ch=dt.slice(0,7),[a,m]=ch.split("-").map(Number),nd=diasMes(a,m-1),day=+dt.slice(8,10),remaining=Math.max(nd-day,1);
- document.getElementById("dailyTeam").innerHTML=nomesAtivos().map(v=>{
-   let ref=dailyGoal(ch,v,k),today=dados.filter(x=>x.data===dt&&x.vendedor===v),val=total(today,k);
-   let upto=dados.filter(x=>x.vendedor===v&&x.data.startsWith(ch)&&x.data<=dt),acc=total(upto,k),goal=indGoal(ch,v,k),falt=Math.max(goal-acc,0),nova=Math.ceil(falt/remaining);
-   let status=today.length===0?'<span class="small">Sem lançamento</span>':val>=ref?'<span class="good">🟢 Meta do dia</span>':val>=ref*.8?'<span class="warn">🟡 Atenção</span>':'<span class="bad">🔴 Abaixo</span>';
-   return `<tr><td><b>${v}</b></td><td>${today.length?val:"—"}</td><td>${ref}</td><td>${status}</td><td>${acc}</td><td>${falt}</td><td><b>${nova}</b></td></tr>`;
- }).join("");
-}
-
-function renderMetas(){let ch=document.getElementById("metaMes").value,m=getMetas(ch);document.getElementById("metaGrid").innerHTML=keys.map(k=>`<div class="metaBox"><div class="label">${nomes[k]}</div><input id="meta_${k}" type="number" min="0" value="${m[k]}"></div>`).join("")}
-
-let metasIndividuais=JSON.parse(localStorage.getItem("claroTieteV4MetasIndividuais")||"{}");
-function equipeKey(ch,nome){return ch+"|"+nome}
-function getIndMeta(ch,nome){
-  let k=equipeKey(ch,nome);
-  if(!metasIndividuais[k]){
-    let m=getMetas(ch), n=Math.max(nomesAtivos().length,1);
-    metasIndividuais[k]={gross:Math.ceil(m.gross/n),fibra:Math.ceil(m.fibra/n),tv:Math.ceil(m.tv/n),mplay:Math.ceil(m.mplay/n),google:Math.ceil(m.google/n)};
-  }
-  return metasIndividuais[k];
-}
-function renderEquipe(){
-  let ch=document.getElementById("equipeMes").value;
-  document.getElementById("equipeTable").innerHTML=equipe.map((p,i)=>{
-    let m=getIndMeta(ch,p.nome);
-    return `<tr><td><input type="checkbox" id="ativo_${i}" ${p.ativo?"checked":""}></td>
-    <td><input id="nome_${i}" value="${p.nome}" style="padding:8px;border:1px solid #ccc;border-radius:8px;width:140px"></td>
-    <td><input id="ig_${i}" type="number" min="0" value="${m.gross}" style="width:90px;padding:7px"></td>
-    <td><input id="if_${i}" type="number" min="0" value="${m.fibra}" style="width:75px;padding:7px"></td>
-    <td><input id="it_${i}" type="number" min="0" value="${m.tv}" style="width:75px;padding:7px"></td>
-    <td><input id="im_${i}" type="number" min="0" value="${m.mplay}" style="width:75px;padding:7px"></td>
-    <td><input id="io_${i}" type="number" min="0" value="${m.google}" style="width:75px;padding:7px"></td>
-    <td><button class="btn light" onclick="removeVendedor(${i})">Excluir</button></td></tr>`;
-  }).join("");
-}
-function saveEquipe(){
-  let ch=document.getElementById("equipeMes").value;
-  let novo=[];
-  for(let i=0;i<equipe.length;i++){
-    let nome=document.getElementById("nome_"+i).value.trim();
-    if(!nome)continue;
-    novo.push({nome,ativo:document.getElementById("ativo_"+i).checked});
-    metasIndividuais[equipeKey(ch,nome)]={gross:+document.getElementById("ig_"+i).value||0,fibra:+document.getElementById("if_"+i).value||0,tv:+document.getElementById("it_"+i).value||0,mplay:+document.getElementById("im_"+i).value||0,google:+document.getElementById("io_"+i).value||0};
-  }
-  equipe=novo;
-  localStorage.setItem("claroTieteV4Equipe",JSON.stringify(equipe));
-  localStorage.setItem("claroTieteV4MetasIndividuais",JSON.stringify(metasIndividuais));
-  fillDynamicSelectors(); renderEquipe(); render(); alert("Equipe e metas individuais salvas!");
-}
-function addVendedor(){
-  let n=document.getElementById("novoVendedor").value.trim();
-  if(!n)return;
-  if(equipe.some(x=>x.nome.toLowerCase()===n.toLowerCase())){alert("Esse vendedor já está cadastrado.");return}
-  equipe.push({nome:n,ativo:true});document.getElementById("novoVendedor").value="";renderEquipe();fillDynamicSelectors();
-}
-function removeVendedor(i){equipe[i].ativo=false;renderEquipe();fillDynamicSelectors()}
-function fillDynamicSelectors(){
-  ["filtro","vend","indVend","calVend"].forEach(id=>{
-    let s=document.getElementById(id); if(!s)return;
-    let current=s.value;s.innerHTML=id==="filtro"?'<option>Todos</option>':"";
-    nomesAtivos().forEach(v=>{let o=document.createElement("option");o.textContent=v;s.appendChild(o)});
-    if([...s.options].some(o=>o.value===current))s.value=current;
-  });
-}
-
-function saveMetas(){let ch=document.getElementById("metaMes").value;m={};keys.forEach(k=>m[k]=Math.max(0,+document.getElementById("meta_"+k).value||0));metasMensais[ch]=m;saveAll();render();renderMetas();alert("Metas salvas para "+mesLabel(ch)+"!")}
-function resetMetas(){let ch=document.getElementById("metaMes").value;metasMensais[ch]={...defaultMetas};saveAll();renderMetas();render();alert("Metas padrão restauradas!")}
-document.getElementById("form").addEventListener("submit",e=>{e.preventDefault();let x={data:document.getElementById("data").value,vendedor:document.getElementById("vend").value};keys.forEach(k=>x[k]=+document.getElementById(k).value||0);dados=dados.filter(y=>!(y.data===x.data&&y.vendedor===x.vendedor));dados.push(x);saveAll();alert("Lançamento salvo!");render()});
-document.getElementById("mesFiltro").onchange=()=>{document.getElementById("diaFiltro").value="";render()};
-document.getElementById("filtro").onchange=render;document.getElementById("diaFiltro").onchange=render;
-document.getElementById("indMes").onchange=renderIndividual;document.getElementById("indVend").onchange=renderIndividual;document.getElementById("rankMes").onchange=renderRank;document.getElementById("metaMes").onchange=renderMetas;
-document.getElementById("calMes").onchange=renderCalendar;
-document.getElementById("calVend").onchange=renderCalendar;
-document.getElementById("calIndicador").onchange=renderCalendar;
-document.getElementById("equipeDia").onchange=renderDailyTeam;
-document.getElementById("equipeIndicador").onchange=renderDailyTeam;
-["mesFiltro","indMes","rankMes","metaMes","equipeMes","calMes"].forEach(montarMeses);
-opts("filtro",true);opts("vend");opts("indVend");fillDynamicSelectors();renderEquipe();
-document.getElementById("data").value=new Date().toISOString().slice(0,10);document.getElementById("equipeDia").value=new Date().toISOString().slice(0,10);
-renderMetas();render();
+const defaultSellers=["Alex","Bruno","Patrick","Diego","Glaucia","João","Matheus","Erick","Giulia","Italo","Guilherme"];
+const defaultMetas={GROSS:748,CONTA:450,FIBRA:107,TV:128,MPLAY:60,GOOGLE:40};
+let state={sellers:defaultSellers.map(name=>({name,active:true})),metas:{...defaultMetas},launches:[]};
+let busy=false;
+const money=v=>"R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:0});
+function show(id,b){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderAll()}
+function activeSellers(){return state.sellers.filter(x=>x.active)}
+function monthKey(){return new Date().toISOString().slice(0,7)}
+function launchesMonth(){let m=monthKey();return state.launches.filter(x=>x.date.startsWith(m))}
+function totals(){let t={GROSS:0,CONTA:0,FIBRA:0,TV:0,MPLAY:0,GOOGLE:0};for(const x of launchesMonth())for(const k in t)t[k]+=Number(x[k]||0);return t}
+function sellerTotals(name){let t={GROSS:0,CONTA:0,FIBRA:0,TV:0,MPLAY:0,GOOGLE:0};for(const x of launchesMonth())if(x.seller===name)for(const k in t)t[k]+=Number(x[k]||0);return t}
+function pct(v,m){return m?Math.round(v/m*100):0}
+function status(p){return p>=100?"ok":p>=80?"warn":"bad"}
+function renderAll(){document.getElementById("monthLabel").textContent=new Date().toLocaleDateString("pt-BR",{month:"long",year:"numeric"}).toUpperCase();let t=totals();let ps=pct(t.GROSS,state.metas.GROSS);document.getElementById("storePct").textContent=`Loja em ${ps}% da meta de GROSS`;document.getElementById("storeSummary").textContent=`${launchesMonth().length} lançamentos no mês · ${activeSellers().length} vendedores ativos · dados compartilhados na nuvem`;
+document.getElementById("storeCards").innerHTML=["GROSS","CONTA","FIBRA","TV","MPLAY","GOOGLE"].map(k=>{let p=pct(t[k],state.metas[k]);return `<div class="card"><div class="label">${k}</div><div class="num">${k==="GROSS"?money(t[k]):t[k]}</div><div class="pct">${p}% · meta ${state.metas[k]}</div><div class="bar"><i style="width:${Math.min(p,100)}%"></i></div></div>`}).join("");
+document.getElementById("sellerRows").innerHTML=activeSellers().map(s=>{let x=sellerTotals(s.name);let vals=["GROSS","FIBRA","TV","MPLAY","GOOGLE"];let p=Math.round(vals.reduce((a,k)=>a+pct(x[k],state.metas[k]/activeSellers().length),0)/vals.length);return `<tr><td><b>${s.name}</b></td>${vals.map(k=>`<td>${x[k]} <small>${pct(x[k],state.metas[k]/activeSellers().length)}%</small></td>`).join("")}<td><span class="status ${status(p)}">${p}%</span></td></tr>`}).join("");
+document.getElementById("launchRows").innerHTML=[...launchesMonth()].reverse().slice(0,30).map(x=>`<tr><td>${x.date}</td><td>${x.seller}</td><td>${x.GROSS}</td><td>${x.FIBRA}</td><td>${x.TV}</td><td>${x.MPLAY}</td><td>${x.GOOGLE}</td></tr>`).join("");
+document.getElementById("rankingRows").innerHTML=activeSellers().map(s=>{let x=sellerTotals(s.name);let p=Math.round(["GROSS","FIBRA","TV","MPLAY","GOOGLE"].reduce((a,k)=>a+pct(x[k],state.metas[k]/activeSellers().length),0)/5);return {s:s.name,x,p}}).sort((a,b)=>b.p-a.p).map((r,i)=>`<tr><td>${i+1}</td><td><b>${r.s}</b></td><td>${money(r.x.GROSS)}</td><td>${r.x.FIBRA}</td><td>${r.x.TV}</td><td>${r.x.MPLAY}</td><td><span class="status ${status(r.p)}">${r.p}%</span></td></tr>`).join("");
+document.getElementById("seller").innerHTML=activeSellers().map(s=>`<option>${s.name}</option>`).join("");document.getElementById("individualSelect").innerHTML=activeSellers().map(s=>`<option>${s.name}</option>`).join("");
+document.getElementById("metaInputs").innerHTML=Object.keys(state.metas).map(k=>`<div class="card"><div class="label">${k}</div><input id="meta_${k}" type="number" min="0" value="${state.metas[k]}"></div>`).join("");renderIndividual()}
+function renderIndividual(){let n=document.getElementById("individualSelect")?.value||activeSellers()[0]?.name;if(!n)return;let x=sellerTotals(n);document.getElementById("individualCards").innerHTML=["GROSS","CONTA","FIBRA","TV","MPLAY","GOOGLE"].map(k=>`<div class="card"><div class="label">${k}</div><div class="num">${k==="GROSS"?money(x[k]):x[k]}</div><div class="pct">${pct(x[k],state.metas[k]/activeSellers().length)}% da meta individual</div><div class="bar"><i style="width:${Math.min(pct(x[k],state.metas[k]/activeSellers().length),100)}%"></i></div></div>`).join("")}
+async function load(){try{let r=await fetch("/api/data",{cache:"no-store"});if(!r.ok)throw 0;state=await r.json();document.getElementById("syncDot").className="dot";document.getElementById("syncText").textContent="Sincronizado com a base compartilhada";renderAll()}catch(e){document.getElementById("syncDot").className="dot off";document.getElementById("syncText").textContent="Sem conexão com a base — tentando novamente"}} 
+async function saveLaunch(){let o={date:date.value,seller:seller.value,GROSS:+gross.value,CONTA:+conta.value,FIBRA:+fibra.value,TV:+tv.value,MPLAY:+mplay.value,GOOGLE:+google.value};if(!o.date||!o.seller)return alert("Informe data e vendedor.");let r=await fetch("/api/data",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({type:"launch",data:o})});if(!r.ok)return alert("Não foi possível salvar.");await load();alert("Lançamento salvo e sincronizado.");}
+async function saveMetas(){let metas={};Object.keys(state.metas).forEach(k=>metas[k]=+document.getElementById("meta_"+k).value);let r=await fetch("/api/data",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({type:"metas",data:metas})});if(!r.ok)return alert("Não foi possível salvar.");await load();alert("Metas salvas para todos os gestores.");}
+date.value=new Date().toISOString().slice(0,10);load();setInterval(load,5000);
 </script>
-</body></html>
+</body>
+</html>
